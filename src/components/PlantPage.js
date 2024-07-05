@@ -19,8 +19,10 @@ function PlantPage() {
   const handleChange = (e) =>{
       const display = plants.filter(plant => plant.name.startsWith(e.target.value))
       setFiltered(display)
-      display.length ===0 && window.alert("Can't find plant")
-      console.log(display)
+      if(display.length ===0){
+        window.alert("Can't find that plant :/")
+        document.querySelector("#search").value = ""
+      }
 
   }
 
