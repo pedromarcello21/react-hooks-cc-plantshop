@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Search() {
+function Search({handleChange, filtered}) {
+
+  // const [filterPlants, setFilterPlants] = useState(plants)
+
   return (
     <div className="searchbar">
       <label htmlFor="search">Search Plants:</label>
@@ -8,10 +11,12 @@ function Search() {
         type="text"
         id="search"
         placeholder="Type a name to search..."
-        onChange={(e) => console.log("Searching...")}
-      />
+        onChange={handleChange}
+        >
+      </input>
     </div>
   );
 }
 
 export default Search;
+
