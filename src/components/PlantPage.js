@@ -7,6 +7,7 @@ function PlantPage() {
 
   const [plants, setPlants] = useState([])
   const [filtered, setFiltered] = useState(plants)
+  const [notFound, setNotFound] = useState(false)
 
   useEffect(() =>{
     fetch("http://localhost:6001/plants")
@@ -20,8 +21,9 @@ function PlantPage() {
       const display = plants.filter(plant => plant.name.startsWith(e.target.value))
       setFiltered(display)
       if(display.length ===0){
-        window.alert("Can't find that plant :/")
-        document.querySelector("#search").value = ""
+        setNotFound(true)
+      } else{
+        setNotFound(false)
       }
 
   }
@@ -31,10 +33,8 @@ function PlantPage() {
     <main>
       <NewPlantForm plants = {plants} setPlants = {setPlants}/>
       <Search handleChange = {handleChange} filtered = {filtered}/>
-      {filtered.length === 0 && <PlantList plants = {plants} />}
-      {filtered.length !== 0 && <PlantList plants = {filtered} />}
+      {notFound ? <p>Can't find that plant</p> : <PlantList plants = {filtered} />}
       
-
     </main>
   );
 }
