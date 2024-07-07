@@ -1,25 +1,6 @@
 import React, {useEffect} from "react";
 
-function NewPlantForm({plants, setPlants}) {
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(e.target.image.value)
-    fetch("http://localhost:6001/plants", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Accept":"application/json"
-      },
-      body:JSON.stringify({
-        name:e.target.name.value,
-        image:e.target.image.value,
-        price:parseInt(e.target.price.value)
-      })
-    })
-    .then(res => res.json())
-    .then(newPlant => setPlants([...plants, newPlant]))
-  }
+function NewPlantForm({plants, setPlants, handleSubmit}) {
 
   return (
     <div className="new-plant-form">

@@ -7,8 +7,10 @@ function PlantPage() {
 
   const [plants, setPlants] = useState([])
   const [filtered, setFiltered] = useState(plants)
-  const [notFound, setNotFound] = useState(false)
+  const [display, setDisplay] = useState(false)
 
+  
+  /////Get plants
   useEffect(() =>{
     fetch("http://localhost:6001/plants")
     .then(res => res.json())
@@ -16,24 +18,42 @@ function PlantPage() {
 
   }, [])
 
+  ////Add Plants
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.image.value)
+    fetch("http://localhost:6001/plants", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json"
+      },
+      body:JSON.stringify({
+        name:e.target.name.value,
+        image:e.target.image.value,
+        price:parseInt(e.target.price.value)
+      })
+    })
+    .then(res => res.json())
+    .then(newPlant => setPlants([...plants, newPlant]))
+  }
+
+
+  /////Search criteria
   const handleChange = (e) =>{
-      const display = plants.filter(plant => plant.name.startsWith(e.target.value))
-      setFiltered(display)
-      if(display.length ===0){
-        setNotFound(true)
-      } else{
-        setNotFound(false)
-      }
-
+      const filtered = plants.filter(plant => plant.name.startsWith(e.target.value))
+      setFiltered(filtered)
+      setDisplay(true)
   }
 
 
   return (
     <main>
-      <NewPlantForm plants = {plants} setPlants = {setPlants}/>
-      <Search handleChange = {handleChange} filtered = {filtered}/>
-      {notFound ? <p>Can't find that plant</p> : <PlantList plants = {filtered} />}
+      <NewPlantForm plants = {plants} setPlants = {setPlants} handleSubmit={handleSubmit}/>
+      <Search handleChange = {handleChange} />
+      {display ? <PlantList plants = {filtered} /> : <PlantList plants = {plants}/>}
+      {console.log(filtered)}
       
     </main>
   );

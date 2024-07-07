@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Search({handleChange, filtered}) {
+function Search({handleChange}) {
 
-  // const [filterPlants, setFilterPlants] = useState(plants)
 
   return (
     <div className="searchbar">
