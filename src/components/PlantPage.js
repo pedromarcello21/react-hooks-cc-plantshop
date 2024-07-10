@@ -9,15 +9,6 @@ function PlantPage() {
   const [filtered, setFiltered] = useState(plants)
   const [display, setDisplay] = useState(false)
 
-  
-  /////Get plants
-  useEffect(() =>{
-    fetch("http://localhost:6001/plants")
-    .then(res => res.json())
-    .then(resConverted => setPlants(resConverted))
-
-  }, [])
-
   ////Add Plants
 
   function handleSubmit(e) {
@@ -38,6 +29,15 @@ function PlantPage() {
     .then(res => res.json())
     .then(newPlant => setPlants([...plants, newPlant]))
   }
+
+
+    /////Get plants
+    useEffect(() =>{
+      fetch("http://localhost:6001/plants")
+      .then(res => res.json())
+      .then(resConverted => setPlants(resConverted))
+  
+    }, [plants])
 
 
   /////Search criteria
